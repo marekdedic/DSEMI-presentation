@@ -2,7 +2,6 @@
 \documentclass[tikz]{standalone}
 
 \usepackage{polyglossia}
-\usepackage{fontspec}
 \usepackage{csquotes}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -43,9 +42,9 @@
 		\node[function] (f) at (9,0) {$f\left(\bar{x},\theta_f\right)$}; 
 		\draw[->] ($(xbar.east)+(+0,0)$) -- ($(f.west)+(-0,0)$) ;
 
-		\draw [thick,decoration={brace,mirror,raise=0.5cm},decorate] (xl.west) -- (xtildel.east) node [pos=0.5,anchor=north,yshift=-0.55cm] {Instance-level features}; 
+		\draw [thick,decoration={brace,mirror,raise=0.5cm},decorate] (xl.west) -- (xtildel.east) node [pos=0.5,anchor=north,yshift=-0.55cm] {Vektory příznaků instancí}; 
 
-		\draw [thick,decoration={brace,mirror,raise=0.5cm},decorate] (g.east) -- (f.east) node [pos=0.5,anchor=north,yshift=-0.55cm] {Bag-level features}; 
+		\draw [thick,decoration={brace,mirror,raise=0.5cm},decorate] (g.east) -- (f.east) node [pos=0.5,anchor=north,yshift=-0.55cm] {Vektory příznaků tašek}; 
 \end{tikzpicture}
 
 \end{document}

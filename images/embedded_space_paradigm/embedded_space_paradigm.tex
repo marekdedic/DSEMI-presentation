@@ -1,0 +1,24 @@
+\RequirePackage{luatex85}
+\documentclass[tikz]{standalone}
+
+\usepackage{polyglossia}
+\usepackage{fontspec}
+\usepackage{csquotes}
+\usepackage{amssymb}
+
+\setdefaultlanguage{czech}
+\setmainfont{TeX Gyre Termes}
+
+\usetikzlibrary{decorations.pathreplacing}
+
+\begin{document}
+
+\begin{tikzpicture}
+	\node (bag) at (0,0) {\( \left\{ \begin{array}{c} ( x_{1, 1}, \dots, x_{1, d}) \\ (x_{2, 1}, \dots, x_{2, d} ) \\ \vdots \\ ( x_{b, 1}, \dots, x_{b, d} ) \end{array} \right\} \)};
+	\node (feature) at (5,0) {\( \bar{x} \in \mathbb{R}^m \)};
+	\node (classifier) at (9,0) {\( f(\bar{x}) = \begin{cases} +1 \\ -1 \end{cases} \)};
+	\draw [->] (bag.east) -- (feature.west) node [pos=0.5,above] {\( \phi(b) \) vloží tašku} node [pos=0.5,below] {do vektoru};
+	\draw [->] (feature.east) -- (classifier.west) node [pos=0.5,above] {klasifikace};
+\end{tikzpicture}
+
+\end{document}

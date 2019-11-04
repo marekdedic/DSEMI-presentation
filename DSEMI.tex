@@ -11,7 +11,7 @@
 \usepackage{amsthm}
 \usepackage{amsmath}
 
-\setdefaultlanguage{english}
+\setdefaultlanguage{czech}
 \setmainfont{TeX Gyre Termes}
 \usetheme{Boadilla}
 \usecolortheme{crane}
@@ -31,25 +31,28 @@
 \newcommand*{\currentSection}{\@currentlabelname}
 \makeatother
 
-\title[Learning a metric for clustering structured data]
+\title[Optimalizace vzdálenosti pro multi-instanční shlukovací problémy]
 {
-	Learning a metric for clustering structured data
+	Optimalizace vzdálenosti pro multi-instanční shlukovací problémy
 }
 
 \titlegraphic
 {
-	\includegraphics[width=0.2\columnwidth]{images/cisco.png}
+	\includegraphics[width=0.12\columnwidth]{images/fjfi.png}
 }
 
 \author[Marek Dědič]
 {
 	Marek~Dědič\inst{1}\inst{2} \\
+	Školitel:~Ing.~Tomáš~Pevný,~Ph.D.\inst{3}\inst{4}
 }
 
 \institute[FJFI ČVUT v Praze]
 {
 	\inst{1} ČVUT v Praze, Fakulta jaderná a fyzikálně inženýrská, Matematická informatika \and
-	\inst{2} Cisco Systems Inc., Karlovo náměstí 10, Praha 2
+	\inst{2} Cisco Systems Inc., Karlovo náměstí 10, Praha 2 \and
+	\inst{3} ČVUT v Praze, Fakulta elektrotechnická \and
+	\inst{4} Avast Software s.r.o., Pikrtova 1737/1a, Praha 4
 }
 
 \AtBeginSection[]{
@@ -70,19 +73,46 @@
 
 % Body
 
-\section{Motivation}
+\section{Úloha \& Motivace}
 
-\begin{frame}{Motivation}
+\begin{frame}{Úloha}
+	Hledání zobrazení úloh do prostorů, ve kterých je lze shlukovat.
+\end{frame}
+
+\begin{frame}{Úloha}
+	Hledání zobrazení multi-instančních úloh do prostorů, ve kterých je lze shlukovat.
+\end{frame}
+
+\begin{frame}{Úloha}
+	Hledání zobrazení multi-instančních úloh do prostorů, ve kterých je lze shlukovat pomocí metod strojového učení.
+\end{frame}
+
+\begin{frame}{Motivace}
 	\begin{itemize}
-		\item Enable clustering of IPs from SwFlows - enhance Correlation
-		\item Take advantage of the structure of the data using MIL
-		\item Try out unsupervised learning
+		\item Umožnit shlukování a následnou klasifikaci IP adres
+		\item Využít struktury dat pomocí multi-instančního učení
+		\item Vyzkoušet unsupervised metody
 	\end{itemize}
 \end{frame}
 
 \section{MIL}
 
-\begin{frame}
+\begin{frame}[c]\frametitle{End--to--end učení}
+	\centering
+	\includegraphics{images/end_to_end_learning/end_to_end_learning.pdf}
+\end{frame}
+
+\begin{frame}[c]\frametitle{Multi instanční učení}
+	\centering
+	\includegraphics{images/multi_instance_learning/multi_instance_learning.pdf}
+\end{frame}
+
+\begin{frame}[c]\frametitle{Paradigma vloženého prostoru}
+	\centering
+	\includegraphics{images/embedded_space_paradigm/embedded_space_paradigm.pdf}
+\end{frame}
+
+\begin{frame}{Vkládající funkce \( \phi \)}
 	\centering
 	\includegraphics[width=0.9\pagewidth]{images/embedding_function/embedding_function.pdf}
 \end{frame}
@@ -90,17 +120,17 @@
 \section{Contrastive predictive coding}
 
 \begin{frame}{Contrastive predictive coding}
-	The ideas of contrastive predictive coding were originally adapted giving a loss function
+	Původní vyjádření přístupu pomocí constractive predictive coding jako ztrátové funkce
 	\[ \log \left\lVert f \left( B_n^{(1)} \right) - f \left( B_n^{(2)} \right) \right\rVert^2 - \log \sum_{j = 1}^K \left\lVert f \left( B_n^{(1)} \right) - f \left( B'_j \right) \right\rVert^2 \]
 \end{frame}
 
 \begin{frame}{Contrastive predictive coding}
-	Later on, the loss function was simplified to
+	Později zjednodušeno na
 	\[ D_{ij} = \left\lVert f \left( B_i^{(1)} \right) - f \left( B_j^{(2)} \right) \right\rVert_2^2 \]
 	\[ \frac{1}{n} \sum_{i = 1}^n \left( \log \left( D_{ii} \right) - \log \left( \sum_{i \neq j} D_{ij} \right) \right) \]
 \end{frame}
 
-\begin{frame}{Contrastive predictive coding - preliminary results (Musk)}
+\begin{frame}{Contrastive predictive coding - předběžné výsledky (Musk2)}
 	\centering
 	\includegraphics[width=0.7\pagewidth]{images/CPC.png}
 \end{frame}
@@ -108,7 +138,7 @@
 \section{Triplet loss}
 
 \begin{frame}{Triplet loss}
-	The triplet loss is another alternative, this time requiring supervised learning
+	Triplet loss je alternativou vyžadující supervised přístup
 	\[ y_{ij} =
 \begin{cases}
 	1 &\text{for} \quad y_i = y_j \\
@@ -118,9 +148,19 @@
 \[ \sum_{ij} y_{ij} D_{ij} + c \sum_{ijl} y_{ij} \left( 1 - y_{il} \right) \max \left( 0, 1 + D_{ij} - D_{il} \right) \]
 \end{frame}
 
-\begin{frame}{Triplet loss - preliminary results (Musk)}
+\begin{frame}{Triplet loss - předběžné výsledky (Musk2)}
 	\centering
 	\includegraphics[width=0.7\pagewidth]{images/triplet.png}
+\end{frame}
+
+\section{Závěr}
+
+\begin{frame}{Závěr}
+	\begin{itemize}
+		\item Vyzkoušeno několik přístuplů ke shlukování dat
+		\item Aplikováno multi-instanční učení na problém shlukování dat
+		\item Porovnání přístupů na veřejně dostupných standardních datasetech.
+	\end{itemize}
 \end{frame}
 
 \end{document}
